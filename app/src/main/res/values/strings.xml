@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">FlipMirror</string>
+    <string name="app_subtitle">Galaxy Z Flip 16:9 Mirroring Optimizer</string>
+    <string name="tile_label">Mirror 16:9</string>
+    <string name="tile_subtitle_active">16:9 Active</string>
+    <string name="tile_subtitle_inactive">Native 22:9</string>
+    
+    <!-- Language -->
+    <string name="lang_dialog_title">Select Language</string>
+    <string name="lang_en">English</string>
+    <string name="lang_ko">한국어 (Korean)</string>
+
+    <!-- Shizuku Status -->
+    <string name="shizuku_connected">Shizuku Connected</string>
+    <string name="shizuku_connected_desc">Change resolution anytime without a PC.</string>
+    <string name="shizuku_perm_required">Shizuku Permission Required</string>
+    <string name="shizuku_perm_desc">Tap to grant Shizuku permission.</string>
+    <string name="shizuku_not_running">Shizuku Service Not Running</string>
+    <string name="shizuku_not_running_desc">Open Shizuku app and start Wireless Debugging.</string>
+    <string name="btn_grant">Grant</string>
+    <string name="btn_help">Help</string>
+
+    <!-- Monitor Card -->
+    <string name="monitor_connected">🖥️ External Monitor Connected</string>
+    <string name="monitor_waiting">🔌 Waiting for External Display</string>
+    <string name="monitor_connected_desc">Mirroring active via C to HDMI.</string>
+    <string name="monitor_waiting_desc">Connect via C to HDMI cable to mirror.</string>
+
+    <!-- Display Info -->
+    <string name="current_display_info">Current Display Info</string>
+    <string name="badge_16_9">16:9 Mirror Mode</string>
+    <string name="badge_native">Flip Native (22:9)</string>
+    <string name="label_applied_res">Applied Resolution</string>
+    <string name="label_density">Density (DPI)</string>
+    <string name="label_native_res">Native Resolution</string>
+    <string name="preview_native">22:9 (Native)</string>
+    <string name="preview_fit">16:9 (Fit Monitor)</string>
+
+    <!-- DPI Settings -->
+    <string name="dpi_card_title">Display DPI Settings (100 ~ 400)</string>
+    <string name="dpi_default_tag"> (Default)</string>
+    <string name="btn_apply_dpi_now">Apply %1$d DPI to Current Screen</string>
+
+    <!-- Presets -->
+    <string name="presets_title">⚡ One-Tap Ratio Presets</string>
+    <string name="preset_portrait_title">16:9 Portrait Monitor Fit (Recommended)</string>
+    <string name="preset_portrait_desc">Resolution 1080 × 1920 • DPI %1$d\nFit monitor height and remove black pillarboxes</string>
+    <string name="preset_landscape_title">16:9 Landscape Fullscreen Mode</string>
+    <string name="preset_landscape_desc">Resolution 1920 × 1080 • DPI %1$d\nFill 16:9 monitor in landscape</string>
+    <string name="preset_qhd_title">16:9 QHD High Resolution Mode</string>
+    <string name="preset_qhd_desc">Resolution 1440 × 2560 • DPI %1$d\nCrisp 16:9 for QHD monitors</string>
+
+    <!-- Buttons -->
+    <string name="btn_restore">🔄 Restore Flip Native Screen (22:9)</string>
+    <string name="btn_custom_res">Custom Resolution &amp; DPI...</string>
+
+    <!-- Tile Guide -->
+    <string name="tile_guide_title">💡 Tip: Add Quick Settings Tile</string>
+    <string name="tile_guide_desc">Toggle 16:9 ratio with one tap from the notification panel without opening this app.\n\n1. Pull down the notification shade completely.\n2. Tap [More (3 dots)] → [Edit buttons].\n3. Drag the [Mirror 16:9] tile into your quick panel.</string>
+
+    <!-- Custom Dialog -->
+    <string name="dialog_custom_title">Custom Resolution &amp; DPI</string>
+    <string name="label_width">Width (pixels)</string>
+    <string name="label_height">Height (pixels)</string>
+    <string name="btn_apply">Apply</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_ok">OK</string>
+
+    <!-- Shizuku Help Dialog -->
+    <string name="shizuku_help_title">Shizuku Wireless Debugging Setup</string>
+    <string name="shizuku_help_1">You can activate permission on your phone via Wi-Fi without a PC:</string>
+    <string name="shizuku_help_2">1. Go to [Settings] → [Developer Options].</string>
+    <string name="shizuku_help_3">2. Turn on [Wireless Debugging].</string>
+    <string name="shizuku_help_4">3. Open [Shizuku] app and tap [Start via Wireless Debugging] pairing.</string>
+    <string name="shizuku_help_5">4. Enter the pairing code from notification to start Shizuku.</string>
+    <string name="shizuku_help_6">5. Return to this app and tap [Grant] permission!</string>
+    <string name="shizuku_help_note">※ Stays active until device restart.</string>
+
+    <!-- Toasts -->
+    <string name="toast_status_refreshed">Status refreshed</string>
+    <string name="toast_portrait_applied">16:9 FHD portrait mode applied (%1$d DPI)</string>
+    <string name="toast_landscape_applied">16:9 FHD landscape mode applied (%1$d DPI)</string>
+    <string name="toast_qhd_applied">16:9 QHD mode applied (%1$d DPI)</string>
+    <string name="toast_restored">Restored to Flip native screen (22:9)</string>
+    <string name="toast_custom_applied">Custom resolution applied (%1$dx%2$d, %3$d DPI)</string>
+    <string name="toast_dpi_applied">%1$d DPI applied</string>
+</resources>

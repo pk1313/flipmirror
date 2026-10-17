@@ -1,0 +1,87 @@
+<resources>
+    <string name="app_name">FlipMirror</string>
+    <string name="app_subtitle">갤럭시 플립 16:9 미러링 최적화</string>
+    <string name="tile_label">미러링 16:9</string>
+    <string name="tile_subtitle_active">16:9 적용됨</string>
+    <string name="tile_subtitle_inactive">기본 22:9</string>
+
+    <!-- Language -->
+    <string name="lang_dialog_title">언어 선택 (Select Language)</string>
+    <string name="lang_en">English (영어)</string>
+    <string name="lang_ko">한국어 (Korean)</string>
+
+    <!-- Shizuku Status -->
+    <string name="shizuku_connected">Shizuku 정상 연결됨</string>
+    <string name="shizuku_connected_desc">PC 없이 폰에서 언제든 해상도 변경이 가능합니다.</string>
+    <string name="shizuku_perm_required">Shizuku 권한 필요</string>
+    <string name="shizuku_perm_desc">터치하여 Shizuku 권한을 허용해 주세요.</string>
+    <string name="shizuku_not_running">Shizuku 서비스 미실행</string>
+    <string name="shizuku_not_running_desc">Shizuku 앱을 켜고 무선 디버깅을 시작해 주세요.</string>
+    <string name="btn_grant">허용</string>
+    <string name="btn_help">방법</string>
+
+    <!-- Monitor Card -->
+    <string name="monitor_connected">🖥️ 외부 모니터 연결됨</string>
+    <string name="monitor_waiting">🔌 외부 디스플레이 대기 중</string>
+    <string name="monitor_connected_desc">C to HDMI 미러링 활성.</string>
+    <string name="monitor_waiting_desc">C to HDMI 케이블로 모니터를 연결하면 미러링됩니다.</string>
+
+    <!-- Display Info -->
+    <string name="current_display_info">현재 디스플레이 정보</string>
+    <string name="badge_16_9">16:9 미러링 모드</string>
+    <string name="badge_native">플립 순정(22:9)</string>
+    <string name="label_applied_res">적용 해상도</string>
+    <string name="label_density">밀도(DPI)</string>
+    <string name="label_native_res">플립 순정 해상도</string>
+    <string name="preview_native">22:9 (순정)</string>
+    <string name="preview_fit">16:9 (모니터 맞춤)</string>
+
+    <!-- DPI Settings -->
+    <string name="dpi_card_title">화면 DPI 설정 (100 ~ 400)</string>
+    <string name="dpi_default_tag"> (기본)</string>
+    <string name="btn_apply_dpi_now">현재 화면에 %1$d DPI 즉시 적용</string>
+
+    <!-- Presets -->
+    <string name="presets_title">⚡ 원터치 비율 변경 프리셋</string>
+    <string name="preset_portrait_title">16:9 세로 모니터 맞춤 (권장)</string>
+    <string name="preset_portrait_desc">해상도 1080 × 1920 • DPI %1$d\n모니터 세로 높이에 딱 맞추고 좌우 레터박스 제거</string>
+    <string name="preset_landscape_title">16:9 가로 전체화면 모드</string>
+    <string name="preset_landscape_desc">해상도 1920 × 1080 • DPI %1$d\n가로 방향 16:9 모니터 화면에 꽉 찬 출력</string>
+    <string name="preset_qhd_title">16:9 QHD 고해상도 모드</string>
+    <string name="preset_qhd_desc">해상도 1440 × 2560 • DPI %1$d\nQHD 모니터용 고선명 16:9 화면</string>
+
+    <!-- Buttons -->
+    <string name="btn_restore">🔄 플립 기본 화면(22:9)으로 복구 (Reset)</string>
+    <string name="btn_custom_res">직접 해상도 &amp; DPI 지정하기...</string>
+
+    <!-- Tile Guide -->
+    <string name="tile_guide_title">💡 팁: 상단바 빠른 설정(타일) 추가하기</string>
+    <string name="tile_guide_desc">앱을 매번 켜지 않아도, 모니터를 연결한 뒤 상단 알림창을 내려 [미러링 16:9] 타일을 터치하면 원터치로 비율을 전환하고 복구할 수 있습니다.\n\n1. 상단 알림창을 아래로 끝까지 내립니다.\n2. 우측 상단 [더보기(점 3개)] → [버튼 편집] 선택\n3. 상단에 나타난 [미러링 16:9] 타일을 아래로 끌어다 배치합니다.</string>
+
+    <!-- Custom Dialog -->
+    <string name="dialog_custom_title">사용자 지정 해상도 &amp; DPI 설정</string>
+    <string name="label_width">가로 너비 (픽셀)</string>
+    <string name="label_height">세로 높이 (픽셀)</string>
+    <string name="btn_apply">적용</string>
+    <string name="btn_cancel">취소</string>
+    <string name="btn_ok">확인</string>
+
+    <!-- Shizuku Help Dialog -->
+    <string name="shizuku_help_title">Shizuku 무선 디버깅 설정 방법</string>
+    <string name="shizuku_help_1">PC 없이 폰 자체 Wi-Fi 연결만으로 권한을 활성화할 수 있습니다:</string>
+    <string name="shizuku_help_2">1. [설정] → [개발자 옵션]으로 이동합니다.</string>
+    <string name="shizuku_help_3">2. [무선 디버깅]을 켭니다.</string>
+    <string name="shizuku_help_4">3. [Shizuku] 앱을 열고 [무선 디버깅으로 시작] 페어링을 누릅니다.</string>
+    <string name="shizuku_help_5">4. 알림창에 뜬 페어링 코드를 입력하면 Shizuku가 시작됩니다.</string>
+    <string name="shizuku_help_6">5. 본 앱으로 돌아와 권한을 [허용]해 주시면 끝납니다!</string>
+    <string name="shizuku_help_note">※ 재부팅 전까지는 계속 유지됩니다.</string>
+
+    <!-- Toasts -->
+    <string name="toast_status_refreshed">상태 새로고침 완료</string>
+    <string name="toast_portrait_applied">16:9 FHD 세로 모드가 적용되었습니다. (%1$d DPI)</string>
+    <string name="toast_landscape_applied">16:9 FHD 가로 모드가 적용되었습니다. (%1$d DPI)</string>
+    <string name="toast_qhd_applied">16:9 QHD 모드가 적용되었습니다. (%1$d DPI)</string>
+    <string name="toast_restored">플립 기본 22:9 화면으로 복구되었습니다.</string>
+    <string name="toast_custom_applied">사용자 지정 해상도(%1$dx%2$d, %3$d DPI)가 적용되었습니다.</string>
+    <string name="toast_dpi_applied">%1$d DPI가 적용되었습니다.</string>
+</resources>
