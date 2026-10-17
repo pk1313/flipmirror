@@ -8,7 +8,7 @@ class FlipMirrorApp : Application() {
         super.onCreate()
         LanguagePreferences.init(this)
         ShizukuManager.init()
-        DisplayResolutionManager.initNotificationChannel(this)
+        DisplayResolutionManager.init(this)
     }
 
     override fun attachBaseContext(base: Context) {

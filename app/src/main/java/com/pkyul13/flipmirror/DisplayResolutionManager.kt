@@ -5,7 +5,12 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.hardware.display.DisplayManager
 import android.os.Build
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
+import android.widget.Toast
 import androidx.core.app.NotificationCompat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -30,6 +35,7 @@ data class DisplayState(
 }
 
 object DisplayResolutionManager {
+    private const val TAG = "DisplayResManager"
     private const val NOTIFICATION_ID = 3001
     const val CHANNEL_ID = "flipmirror_status_channel"
 
@@ -40,6 +46,16 @@ object DisplayResolutionManager {
     val displayState: StateFlow<DisplayState> = _displayState
 
     private val scope = CoroutineScope(Dispatchers.IO)
+    private val mainHandler = Handler(Looper.getMainLooper())
+
+    private var isDisplayListenerRegistered = false
+    private var hadExternalDisplay = false
+    private var isNotificationShowing = false
+
+    fun init(context: Context) {
+        initNotificationChannel(context)
+        initDisplayListener(context)
+    }
 
     fun initNotificationChannel(context: Context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -52,6 +68,50 @@ object DisplayResolutionManager {
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    private fun initDisplayListener(context: Context) {
+        if (isDisplayListenerRegistered) return
+        val appContext = context.applicationContext
+        val dm = appContext.getSystemService(Context.DISPLAY_SERVICE) as DisplayManager
+
+        hadExternalDisplay = DisplayHelper.isExternalDisplayConnected(appContext)
+
+        dm.registerDisplayListener(object : DisplayManager.DisplayListener {
+            override fun onDisplayAdded(displayId: Int) {
+                if (DisplayHelper.isExternalDisplayConnected(appContext)) {
+                    hadExternalDisplay = true
+                    Log.d(TAG, "External display connected (id=$displayId)")
+                }
+            }
+
+            override fun onDisplayChanged(displayId: Int) {}
+
+            override fun onDisplayRemoved(displayId: Int) {
+                val isConnectedNow = DisplayHelper.isExternalDisplayConnected(appContext)
+                Log.d(TAG, "Display removed: was=$hadExternalDisplay, now=$isConnectedNow")
+
+                // When external display is unplugged while an override (16:9) is applied:
+                if (hadExternalDisplay && !isConnectedNow) {
+                    hadExternalDisplay = false
+                    if (isAutoRestoreEnabled(appContext) && _displayState.value.isOverrideApplied) {
+                        Log.i(TAG, "Auto-restoring resolution to native due to disconnect...")
+                        resetToDefault(appContext) {
+                            mainHandler.post {
+                                Toast.makeText(
+                                    appContext,
+                                    appContext.getString(R.string.toast_auto_restored),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                }
+            }
+        }, mainHandler)
+
+        isDisplayListenerRegistered = true
+        Log.d(TAG, "DisplayListener registered successfully.")
     }
 
     fun refreshState(context: Context, onComplete: ((DisplayState) -> Unit)? = null) {
@@ -123,13 +183,20 @@ object DisplayResolutionManager {
                 statusText = statusText
             )
 
+            val stateChanged = _displayState.value != newState
             _displayState.value = newState
 
+            // Update persistent ongoing notification safely only when state changed
             if (newState.isOverrideApplied) {
-                MonitorWatcherService.start(context, newState.statusText)
+                if (stateChanged || !isNotificationShowing) {
+                    showPersistentNotification(context, newState)
+                    isNotificationShowing = true
+                }
             } else {
-                MonitorWatcherService.stop(context)
-                dismissNotification(context)
+                if (isNotificationShowing) {
+                    dismissNotification(context)
+                    isNotificationShowing = false
+                }
             }
 
             onComplete?.invoke(newState)
@@ -213,7 +280,6 @@ object DisplayResolutionManager {
         scope.launch {
             ShizukuManager.executeShellCommand("wm size reset")
             ShizukuManager.executeShellCommand("wm density reset")
-            MonitorWatcherService.stop(context)
             refreshState(context) {
                 dismissNotification(context)
                 onDone?.invoke()
@@ -229,7 +295,44 @@ object DisplayResolutionManager {
         }
     }
 
+    private fun showPersistentNotification(context: Context, state: DisplayState) {
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        val contentIntent = Intent(context, MainActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+        }
+        val pendingContentIntent = PendingIntent.getActivity(
+            context,
+            0,
+            contentIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val restoreIntent = Intent(context, RestoreReceiver::class.java).apply {
+            action = ACTION_RESTORE_DEFAULT
+        }
+        val pendingRestoreIntent = PendingIntent.getBroadcast(
+            context,
+            1,
+            restoreIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_tile_mirror)
+            .setContentTitle(context.getString(R.string.notification_active_title))
+            .setContentText("현재: ${state.currentWidth}x${state.currentHeight} (${state.currentDensity} DPI)")
+            .setOngoing(true)
+            .setPriority(NotificationCompat.PRIORITY_LOW)
+            .setContentIntent(pendingContentIntent)
+            .addAction(R.drawable.ic_tile_mirror, context.getString(R.string.btn_restore_short), pendingRestoreIntent)
+            .build()
+
+        notificationManager.notify(NOTIFICATION_ID, notification)
+    }
+
     fun dismissNotification(context: Context) {
+        isNotificationShowing = false
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancel(NOTIFICATION_ID)
     }

@@ -10,7 +10,7 @@
 [![Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-4285F4?style=flat&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
 [![Shizuku](https://img.shields.io/badge/Powered%20by-Shizuku-E65100?style=flat)](https://shizuku.rikka.app/)
 [![Latest Release](https://img.shields.io/github/v/release/pk1313/flipmirror?color=success&logo=github)](https://github.com/pk1313/flipmirror/releases/latest)
-[![Download APK](https://img.shields.io/badge/Download-APK%20(v1.0.1)-brightgreen?logo=android)](https://github.com/pk1313/flipmirror/releases/download/v1.0.1/FlipMirror-v1.0.1.apk)
+[![Download APK](https://img.shields.io/badge/Download-APK%20(v1.0.2)-brightgreen?logo=android)](https://github.com/pk1313/flipmirror/releases/download/v1.0.2/FlipMirror-v1.0.2.apk)
 
 ---
 
