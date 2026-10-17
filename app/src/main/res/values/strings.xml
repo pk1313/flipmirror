@@ -76,6 +76,13 @@
     <string name="shizuku_help_6">5. Return to this app and tap [Grant] permission!</string>
     <string name="shizuku_help_note">※ Stays active until device restart.</string>
 
+    <!-- Notification & Auto Restore -->
+    <string name="notification_active_title">🖥️ 16:9 Mirror Mode Active</string>
+    <string name="btn_restore_short">🔄 Restore Native</string>
+    <string name="auto_restore_title">Auto-restore on Disconnect</string>
+    <string name="auto_restore_desc">Automatically reverts to native screen when the external display is unplugged.</string>
+    <string name="toast_auto_restored">External monitor disconnected. Restored to native display.</string>
+
     <!-- Toasts -->
     <string name="toast_status_refreshed">Status refreshed</string>
     <string name="toast_portrait_applied">16:9 FHD portrait mode applied (%1$d DPI)</string>

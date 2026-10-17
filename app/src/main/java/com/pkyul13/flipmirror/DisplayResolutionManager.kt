@@ -125,9 +125,10 @@ object DisplayResolutionManager {
 
             _displayState.value = newState
 
-            if (is16x9) {
-                showPersistentNotification(context, newState)
+            if (newState.isOverrideApplied) {
+                MonitorWatcherService.start(context, newState.statusText)
             } else {
+                MonitorWatcherService.stop(context)
                 dismissNotification(context)
             }
 
@@ -137,6 +138,7 @@ object DisplayResolutionManager {
 
     private const val PREFS_NAME = "flipmirror_prefs"
     private const val KEY_PREFERRED_DPI = "preferred_dpi"
+    private const val KEY_AUTO_RESTORE = "auto_restore_on_disconnect"
     const val DEFAULT_DPI = 240
     const val MIN_DPI = 100
     const val MAX_DPI = 400
@@ -150,6 +152,16 @@ object DisplayResolutionManager {
         val coerced = dpi.coerceIn(MIN_DPI, MAX_DPI)
         val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
         prefs.edit().putInt(KEY_PREFERRED_DPI, coerced).apply()
+    }
+
+    fun isAutoRestoreEnabled(context: Context): Boolean {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        return prefs.getBoolean(KEY_AUTO_RESTORE, true)
+    }
+
+    fun setAutoRestoreEnabled(context: Context, enabled: Boolean) {
+        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        prefs.edit().putBoolean(KEY_AUTO_RESTORE, enabled).apply()
     }
 
     fun apply16x9Portrait(
@@ -201,6 +213,7 @@ object DisplayResolutionManager {
         scope.launch {
             ShizukuManager.executeShellCommand("wm size reset")
             ShizukuManager.executeShellCommand("wm density reset")
+            MonitorWatcherService.stop(context)
             refreshState(context) {
                 dismissNotification(context)
                 onDone?.invoke()
@@ -216,43 +229,7 @@ object DisplayResolutionManager {
         }
     }
 
-    private fun showPersistentNotification(context: Context, state: DisplayState) {
-        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        val contentIntent = Intent(context, MainActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
-        }
-        val pendingContentIntent = PendingIntent.getActivity(
-            context,
-            0,
-            contentIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        val restoreIntent = Intent(context, RestoreReceiver::class.java).apply {
-            action = ACTION_RESTORE_DEFAULT
-        }
-        val pendingRestoreIntent = PendingIntent.getBroadcast(
-            context,
-            1,
-            restoreIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
-        )
-
-        val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-            .setSmallIcon(R.drawable.ic_tile_mirror)
-            .setContentTitle("🖥️ 16:9 미러링 모드 켜짐")
-            .setContentText("현재: ${state.currentWidth}x${state.currentHeight} (${state.currentDensity} DPI)")
-            .setOngoing(true)
-            .setPriority(NotificationCompat.PRIORITY_LOW)
-            .setContentIntent(pendingContentIntent)
-            .addAction(R.drawable.ic_tile_mirror, "🔄 기본 화면 복구", pendingRestoreIntent)
-            .build()
-
-        notificationManager.notify(NOTIFICATION_ID, notification)
-    }
-
-    private fun dismissNotification(context: Context) {
+    fun dismissNotification(context: Context) {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.cancel(NOTIFICATION_ID)
     }

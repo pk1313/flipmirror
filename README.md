@@ -10,7 +10,7 @@
 [![Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-4285F4?style=flat&logo=jetpackcompose&logoColor=white)](https://developer.android.com/jetpack/compose)
 [![Shizuku](https://img.shields.io/badge/Powered%20by-Shizuku-E65100?style=flat)](https://shizuku.rikka.app/)
 [![Latest Release](https://img.shields.io/github/v/release/pk1313/flipmirror?color=success&logo=github)](https://github.com/pk1313/flipmirror/releases/latest)
-[![Download APK](https://img.shields.io/badge/Download-APK%20(v1.0.0)-brightgreen?logo=android)](https://github.com/pk1313/flipmirror/releases/download/v1.0.0/FlipMirror-v1.0.0.apk)
+[![Download APK](https://img.shields.io/badge/Download-APK%20(v1.0.1)-brightgreen?logo=android)](https://github.com/pk1313/flipmirror/releases/download/v1.0.1/FlipMirror-v1.0.1.apk)
 
 ---
 
@@ -64,8 +64,9 @@ When mirroring your smartphone to a standard 16:9 TV, external monitor, or proje
   * When 16:9 mode is active, an ongoing notification displays the current resolution and provides a `[Restore Native Screen]` action button for quick recovery.
 * **🌐 Multi-Language Support:**
   * English (Default) and Korean (한국어) with instant in-app switching (via top bar 🌐 icon).
-* **🔌 External Display Detection:**
+* **🔌 External Display Detection & Auto-Restore:**
   * Real-time monitoring of USB-C to HDMI cable connections.
+  * **Auto-Restore on Disconnect:** Unplugging the HDMI cable automatically reverts your display resolution and DPI back to native proportions and shuts down the service.
 
 ---
 
@@ -139,8 +140,9 @@ When rotating into landscape, Android/One UI by default reserves a margin for th
   * 16:9 모드 실행 중 알림창에 `[🔄 기본 화면 복구]` 버튼이 상주하여 언제든 안전하게 원래 화면으로 복구 가능.
 * **🌐 다국어 지원:**
   * 영어(기본값) 및 한국어 지원 (상단바 🌐 아이콘으로 원터치 전환).
-* **🔌 외부 모니터 연결 감지:**
+* **🔌 외부 모니터 연결 감지 & 케이블 분리 시 자동 복구:**
   * C to HDMI 케이블 연결 상태 실시간 감지.
+  * **분리 시 자동 복구:** 외부 모니터 케이블을 빼면 시스템이 즉시 감지하여 스마트폰 화면을 원래 기본 비율 및 해상도로 자동 원복하고 서비스를 종료합니다 (앱 설정에서 켜기/끄기 가능).
 
 ---
 

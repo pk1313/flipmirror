@@ -76,6 +76,13 @@
     <string name="shizuku_help_6">5. 본 앱으로 돌아와 권한을 [허용]해 주시면 끝납니다!</string>
     <string name="shizuku_help_note">※ 재부팅 전까지는 계속 유지됩니다.</string>
 
+    <!-- Notification & Auto Restore -->
+    <string name="notification_active_title">🖥️ 16:9 미러링 모드 켜짐</string>
+    <string name="btn_restore_short">🔄 기본 화면 복구</string>
+    <string name="auto_restore_title">모니터 분리 시 자동 복구</string>
+    <string name="auto_restore_desc">외부 모니터 케이블을 빼면 자동으로 기본 화면으로 복구합니다.</string>
+    <string name="toast_auto_restored">외부 모니터가 분리되어 기본 화면으로 자동 복구되었습니다.</string>
+
     <!-- Toasts -->
     <string name="toast_status_refreshed">상태 새로고침 완료</string>
     <string name="toast_portrait_applied">16:9 FHD 세로 모드가 적용되었습니다. (%1$d DPI)</string>

@@ -106,6 +106,7 @@ fun FlipMirrorMainScreen() {
 
     var isExternalConnected by remember { mutableStateOf(false) }
     var externalDisplayName by remember { mutableStateOf<String?>(null) }
+    var autoRestoreEnabled by remember { mutableStateOf(DisplayResolutionManager.isAutoRestoreEnabled(context)) }
 
     // Periodic refresh for display connection & state
     LaunchedEffect(Unit) {
@@ -194,6 +195,15 @@ fun FlipMirrorMainScreen() {
             ExternalMonitorCard(
                 isConnected = isExternalConnected,
                 monitorName = externalDisplayName
+            )
+
+            // 2.1 Auto-restore on disconnect toggle
+            AutoRestoreCard(
+                isEnabled = autoRestoreEnabled,
+                onToggle = { enabled ->
+                    autoRestoreEnabled = enabled
+                    DisplayResolutionManager.setAutoRestoreEnabled(context, enabled)
+                }
             )
 
             // 3. Current Display State & Visual Ratio Card
@@ -534,6 +544,57 @@ fun ExternalMonitorCard(isConnected: Boolean, monitorName: String?) {
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
+        }
+    }
+}
+
+@Composable
+fun AutoRestoreCard(
+    isEnabled: Boolean,
+    onToggle: (Boolean) -> Unit
+) {
+    Card(
+        shape = RoundedCornerShape(14.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(1.dp, MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(14.dp))
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 14.dp, vertical = 10.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                imageVector = Icons.Default.PowerSettingsNew,
+                contentDescription = null,
+                tint = if (isEnabled) MaterialTheme.colorScheme.primary else Color(0xFF94A3B8),
+                modifier = Modifier.size(24.dp)
+            )
+            Spacer(modifier = Modifier.width(12.dp))
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = stringResource(R.string.auto_restore_title),
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 14.sp,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+                Text(
+                    text = stringResource(R.string.auto_restore_desc),
+                    fontSize = 11.sp,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                )
+            }
+            Spacer(modifier = Modifier.width(8.dp))
+            Switch(
+                checked = isEnabled,
+                onCheckedChange = onToggle,
+                colors = SwitchDefaults.colors(
+                    checkedThumbColor = MaterialTheme.colorScheme.primary,
+                    checkedTrackColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            )
         }
     }
 }
